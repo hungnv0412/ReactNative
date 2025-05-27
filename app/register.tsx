@@ -18,7 +18,7 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://192.168.100.242:5232/api/user/register", {
+      const response = await fetch("http://192.168.30.24:5232/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -10,7 +10,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://192.168.100.242:5232/api/User/login", {
+      const response = await fetch("http://192.168.30.24:5232/api/User/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,9 +34,7 @@ export default function Login() {
       await AsyncStorage.setItem("token", token);
 
       Alert.alert("Login Successful", `Welcome ${data.username}`);
-
-      // Nếu muốn tự động chuyển trang sau khi login
-      router.push("/category_page"); // Chuyển đến trang danh sách category
+      router.replace("/main/category_page"); // Chuyển đến trang expense_page sau khi đăng nhập thành công
 
     } catch (error) {
       console.error("Login error:", error);

@@ -1,17 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    Button,
-    FlatList,
-    ListRenderItem,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  Button,
+  FlatList,
+  ListRenderItem,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 type Category = {
@@ -28,7 +28,7 @@ export default function CategoryListScreen({ navigation }: any) {
   const [searchText, setSearchText] = useState('');
   const [newCategoryName, setNewCategoryName] = useState('');
 
-  const API_BASE = 'http://192.168.100.242:5232/api';
+  const API_BASE = 'http://192.168.30.24:5232/api';
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -113,9 +113,15 @@ export default function CategoryListScreen({ navigation }: any) {
     ]);
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCategories();
+      setSearchText('');
+      return () => {
+        setSearchText('');
+      };
+    }, [])
+  );
 
   // Filter categories by search text
   useEffect(() => {
@@ -131,9 +137,9 @@ export default function CategoryListScreen({ navigation }: any) {
     <TouchableOpacity
       style={styles.item}
       onPress={() =>
-        navigation.navigate('CategoryExpensesScreen', {
-          categoryId: item.id,
-          categoryName: item.name,
+        router.push({
+          pathname: '/main/expense_page',
+          params:{categoryId : item.id}
         })
       }
     >

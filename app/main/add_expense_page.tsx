@@ -1,14 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function AddExpenseScreen({ navigation }: any) {
-    const router = useRouter();
+  const params = useLocalSearchParams();
+  const categoryId = Array.isArray(params.categoryId) ? params.categoryId[0] : params.categoryId;
+  const router = useRouter();
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setDescription('');
+        setAmount('');
+      };
+    }, [])
+  );
   const handleSave = async () => {
     if (!description || !amount || !categoryId) {
       Alert.alert('Error', 'Please fill all fields');
@@ -17,7 +25,7 @@ export default function AddExpenseScreen({ navigation }: any) {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch('http://192.168.100.242:5232/api/Expense', {
+      const response = await fetch('http://192.168.30.24:5232/api/Expense', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +44,10 @@ export default function AddExpenseScreen({ navigation }: any) {
       }
 
       Alert.alert('Success', 'Expense added successfully');
-      router.push("/expense_page"); // quay lại danh sách
+      router.replace({
+        pathname: '/main/expense_page',
+        params: { categoryId: categoryId },
+      }); 
     } catch (error) {
       Alert.alert('Error', (error as Error).message);
     }
@@ -59,15 +70,12 @@ export default function AddExpenseScreen({ navigation }: any) {
         keyboardType="numeric"
         style={styles.input}
       />
-      <TextInput
-        placeholder="Category"
-        value={categoryId}
-        onChangeText={setCategoryId}
-        style={styles.input}
-      />
 
       <Button title="Save" onPress={handleSave} />
-      <Button title="Cancel" color="gray" onPress={() => router.push("/expense_page")} />
+      <Button title="Cancel" color="gray" onPress={() => router.replace({
+        pathname: '/main/expense_page',
+        params: { categoryId: categoryId }, 
+      })} />
     </View>
   );
 }
