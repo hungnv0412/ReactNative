@@ -1,17 +1,17 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Button,
   FlatList,
   ListRenderItem,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 type Category = {
@@ -28,7 +28,7 @@ export default function CategoryListScreen({ navigation }: any) {
   const [searchText, setSearchText] = useState('');
   const [newCategoryName, setNewCategoryName] = useState('');
 
-  const API_BASE = 'http://192.168.30.24:5232/api';
+  const API_BASE = 'http://192.168.100.242:5232/api';
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -134,20 +134,20 @@ export default function CategoryListScreen({ navigation }: any) {
   }, [searchText, categories]);
 
   const renderItem: ListRenderItem<Category> = ({ item }) => (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() =>
-        router.push({
-          pathname: '/main/expense_page',
-          params:{categoryId : item.id}
-        })
-      }
-    >
+    <TouchableOpacity 
+      style={styles.item} 
+      onPress={()=>router.push({
+        pathname:'/main/expense_page',
+        params: {categoryId : item.id}
+      })}>
       <Text style={styles.title}>{item.name}</Text>
-      <View style={styles.buttonsContainer}>
-        {/* Nếu muốn bạn có thể thêm nút sửa ở đây */}
-        <Button title="Delete" color="red" onPress={() => deleteCategory(item.id)} />
-      </View>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => deleteCategory(item.id)}
+        activeOpacity={0.7}
+      >
+        <MaterialIcons name="delete" size={22} color="#fff" />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 
@@ -164,21 +164,29 @@ export default function CategoryListScreen({ navigation }: any) {
         value={searchText}
         onChangeText={setSearchText}
         style={styles.searchInput}
+        placeholderTextColor="#aaa"
       />
 
-      <TextInput
-        placeholder="New category name"
-        value={newCategoryName}
-        onChangeText={setNewCategoryName}
-        style={[styles.searchInput, { marginBottom: 12 }]}
-      />
-      <Button title="Add Category" onPress={addCategory} />
+      <View style={styles.addRow}>
+        <TextInput
+          placeholder="New category name"
+          value={newCategoryName}
+          onChangeText={setNewCategoryName}
+          style={styles.addInput}
+          placeholderTextColor="#aaa"
+        />
+        <TouchableOpacity style={styles.addButton} onPress={addCategory} activeOpacity={0.8}>
+          <MaterialIcons name="add" size={24} color="#fff" />
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={filteredCategories}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
-        ListEmptyComponent={<Text style={{ marginTop: 20 }}>No categories found.</Text>}
+        contentContainerStyle={{ paddingBottom: 24 }}
+        ListEmptyComponent={<Text style={{ marginTop: 20, textAlign: 'center', color: '#888' }}>No categories found.</Text>}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -188,32 +196,62 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#f5f5f5' },
   header: { fontSize: 28, fontWeight: 'bold', marginBottom: 16, textAlign: 'center', color: '#333' },
   searchInput: {
-    height: 40,
+    height: 44,
     borderColor: '#ddd',
     borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 8,
+    paddingHorizontal: 12,
+    borderRadius: 12,
     backgroundColor: '#fff',
     marginBottom: 12,
+    fontSize: 16,
+  },
+  addRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 18,
+  },
+  addInput: {
+    flex: 1,
+    height: 44,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    fontSize: 16,
+  },
+  addButton: {
+    marginLeft: 10,
+    backgroundColor: '#2196F3',
+    borderRadius: 12,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
   },
   item: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    marginBottom: 12,
-    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+    marginBottom: 14,
+    borderRadius: 14,
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
     elevation: 2,
   },
-  title: { fontSize: 18, fontWeight: '600', marginBottom: 4, color: '#333' },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
+  title: { fontSize: 18, fontWeight: '600', color: '#333' },
+  deleteButton: {
+    backgroundColor: '#F44336',
+    borderRadius: 20,
+    padding: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
   },
   loading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });
