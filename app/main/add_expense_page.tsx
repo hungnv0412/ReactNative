@@ -81,14 +81,15 @@ export default function AddExpenseScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, justifyContent: 'center' },
-  header: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+  container: { flex: 1, padding: 16, justifyContent: 'center', backgroundColor: '#f5f5f5' },
+  header: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, textAlign: 'center', color: '#333' },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#ddd',
     paddingHorizontal: 12,
     paddingVertical: 8,
     marginBottom: 12,
-    borderRadius: 4,
+    borderRadius: 8,
+    backgroundColor: '#fff',
   },
 });

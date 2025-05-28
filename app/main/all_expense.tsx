@@ -2,16 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    Button,
-    FlatList,
-    ListRenderItem,
-    Modal,
-    StyleSheet,
-    Text,
-    TextInput,
-    View
+  ActivityIndicator,
+  Alert,
+  Button,
+  FlatList,
+  ListRenderItem,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
 } from 'react-native';
 
 type Expense = {
@@ -240,25 +240,31 @@ export default function AllExpensePage({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  header: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 },
+  container: { flex: 1, padding: 16, backgroundColor: '#f5f5f5' },
+  header: { fontSize: 28, fontWeight: 'bold', marginBottom: 16, textAlign: 'center', color: '#333' },
   searchInput: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ddd',
     borderWidth: 1,
     paddingHorizontal: 8,
     marginBottom: 12,
-    borderRadius: 4,
+    borderRadius: 8,
+    backgroundColor: '#fff',
   },
   item: {
-    padding: 12,
+    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#ddd',
     marginBottom: 12,
-    borderRadius: 6,
-    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  title: { fontSize: 18, fontWeight: '600', marginBottom: 4 },
+  title: { fontSize: 18, fontWeight: '600', marginBottom: 4, color: '#333' },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -285,5 +291,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 20,
     elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
 });

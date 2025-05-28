@@ -50,9 +50,10 @@ export default function Register() {
         flex: 1,
         justifyContent: "center",
         padding: 16,
+        backgroundColor: '#f5f5f5',
       }}
     >
-      <Text style={{ fontSize: 24, marginBottom: 16 }}>Register</Text>
+      <Text style={{ fontSize: 28, marginBottom: 16, textAlign: 'center', fontWeight: 'bold', color: '#333' }}>Register</Text>
 
       <TextInput
         placeholder="Name"
@@ -61,10 +62,12 @@ export default function Register() {
         autoCapitalize="words"
         style={{
           height: 40,
-          borderColor: "gray",
+          borderColor: '#ddd',
           borderWidth: 1,
           marginBottom: 12,
           paddingHorizontal: 8,
+          borderRadius: 8,
+          backgroundColor: '#fff',
         }}
       />
 
@@ -76,10 +79,12 @@ export default function Register() {
         autoCapitalize="none"
         style={{
           height: 40,
-          borderColor: "gray",
+          borderColor: '#ddd',
           borderWidth: 1,
           marginBottom: 12,
           paddingHorizontal: 8,
+          borderRadius: 8,
+          backgroundColor: '#fff',
         }}
       />
 
@@ -90,10 +95,12 @@ export default function Register() {
         secureTextEntry
         style={{
           height: 40,
-          borderColor: "gray",
+          borderColor: '#ddd',
           borderWidth: 1,
           marginBottom: 12,
           paddingHorizontal: 8,
+          borderRadius: 8,
+          backgroundColor: '#fff',
         }}
       />
 
@@ -104,10 +111,12 @@ export default function Register() {
         secureTextEntry
         style={{
           height: 40,
-          borderColor: "gray",
+          borderColor: '#ddd',
           borderWidth: 1,
           marginBottom: 24,
           paddingHorizontal: 8,
+          borderRadius: 8,
+          backgroundColor: '#fff',
         }}
       />
 
@@ -115,13 +124,16 @@ export default function Register() {
         title={loading ? "Registering..." : "Register"}
         onPress={handleRegister}
         disabled={loading}
+        color="#4CAF50"
       />
       <Button
         title="Go to Login"
         onPress={() => {
          
           router.push("/login");
-        }}/>
+        }}
+        color="#2196F3"
+      />
     </View>
   );
 }

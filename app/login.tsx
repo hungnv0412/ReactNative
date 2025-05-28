@@ -49,9 +49,10 @@ export default function Login() {
         justifyContent: "center",
         alignItems: "center",
         padding: 16,
+        backgroundColor: '#f5f5f5',
       }}
     >
-      <Text style={{ fontSize: 24, marginBottom: 16 }}>Login</Text>
+      <Text style={{ fontSize: 28, marginBottom: 16, fontWeight: 'bold', color: '#333' }}>Login</Text>
       <TextInput
         placeholder="Email"
         value={email}
@@ -59,10 +60,12 @@ export default function Login() {
         style={{
           width: "100%",
           height: 40,
-          borderColor: "gray",
+          borderColor: '#ddd',
           borderWidth: 1,
           marginBottom: 12,
           paddingHorizontal: 8,
+          borderRadius: 8,
+          backgroundColor: '#fff',
         }}
       />
       <TextInput
@@ -73,14 +76,16 @@ export default function Login() {
         style={{
           width: "100%",
           height: 40,
-          borderColor: "gray",
+          borderColor: '#ddd',
           borderWidth: 1,
           marginBottom: 12,
           paddingHorizontal: 8,
+          borderRadius: 8,
+          backgroundColor: '#fff',
         }}
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="Go to Register" onPress={() => router.push("/register")} />
+      <Button title="Login" onPress={handleLogin} color="#4CAF50" />
+      <Button title="Go to Register" onPress={() => router.push("/register")} color="#2196F3" />
     </View>
   );
 }
